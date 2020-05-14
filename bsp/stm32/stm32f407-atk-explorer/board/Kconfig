@@ -26,7 +26,13 @@ menu "Onboard Peripheral Drivers"
         select BSP_USING_UART
         select BSP_USING_UART3
         default n
-    
+
+     config BSP_USING_COM6
+                bool "Enable COM6 (uart6)"
+                select BSP_USING_UART
+                select BSP_USING_UART6
+                default n
+
     config BSP_USING_SRAM
         bool "Enable SRAM"
         select BSP_USING_EXT_FMC_IO
@@ -294,6 +300,11 @@ menu "On-chip Peripheral Drivers"
     config BSP_USING_WDT
         bool "Enable Watchdog Timer"
         select RT_USING_WDT
+        default n
+
+    config BSP_USING_LCDST
+        bool "Enable 2.8 Inch LCD"
+        select RT_USING_LCDST
         default n
 
     config BSP_USING_SDIO

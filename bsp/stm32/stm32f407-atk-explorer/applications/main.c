@@ -14,21 +14,27 @@
 #include <board.h>
 
 /* defined the LED0 pin: PF9 */
-#define LED0_PIN    GET_PIN(F, 9)
+#define LED0_PIN    GET_PIN(E, 3)
+#define LED1_PIN    GET_PIN(E, 4)
+#define LED2_PIN    GET_PIN(G, 4)
 
 int main(void)
-{
-    int count = 1;
-    /* set LED0 pin mode to output */
-    rt_pin_mode(LED0_PIN, PIN_MODE_OUTPUT);
+  {
+//		//rt_console_set_device("vcom");
+//    rt_device_t dev = RT_NULL;
+//     char buf[] = "hello rt-thread!\r\n";
+// 
+//     dev = rt_device_find("vcom");
 
-    while (count++)
-    {
-        rt_pin_write(LED0_PIN, PIN_HIGH);
-        rt_thread_mdelay(500);
-        rt_pin_write(LED0_PIN, PIN_LOW);
-        rt_thread_mdelay(500);
-    }
+//    if (dev)
+//        rt_device_open(dev, RT_DEVICE_FLAG_RDWR);
+//   else
+//       return -RT_ERROR;
+//   while (1)
+//   {
+//        rt_device_write(dev, 0, buf, rt_strlen(buf));
+//        rt_thread_mdelay(500);
+//    }
 
     return RT_EOK;
 }

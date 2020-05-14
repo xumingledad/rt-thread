@@ -153,9 +153,9 @@ static int sram_test(void)
         LOG_D("SRAM test success!");
     }
 
-    return RT_EOK;  
+    return RT_EOK;
 }
-MSH_CMD_EXPORT(sram_test, sram test);
+//MSH_CMD_EXPORT(sram_test, sram test);
 #endif /* FINSH_USING_MSH */
 #endif /* DRV_DEBUG */
 #endif /* BSP_USING_SRAM */
