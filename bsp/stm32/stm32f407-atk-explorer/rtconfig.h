@@ -208,10 +208,6 @@
 /* AT commands */
 
 #define RT_USING_AT
-#define AT_USING_SERVER
-#define AT_SERVER_DEVICE "uart3"
-#define AT_SERVER_RECV_BUFF_LEN 256
-#define AT_CMD_END_MARK_CRLF
 #define AT_USING_CLIENT
 #define AT_CLIENT_NUM_MAX 2
 #define AT_USING_SOCKET

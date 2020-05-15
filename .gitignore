@@ -18,12 +18,10 @@ documentation/html
 *.obj
 *.bak
 *.dep
-*.lib
 *.a
 *.i
 *.d
 tools/kconfig-frontends/kconfig-mconf
-packages
 cconfig.h
 GPUCache
 
