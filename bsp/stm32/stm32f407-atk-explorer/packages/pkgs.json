@@ -40,6 +40,16 @@
   "name": "STEMWIN"
  }, 
  {
+  "path": "/packages/peripherals/button", 
+  "ver": "v1.0.1", 
+  "name": "BUTTON"
+ }, 
+ {
+  "path": "/packages/misc/samples/filesystem_samples", 
+  "ver": "v0.2.0", 
+  "name": "FILESYSTEM_SAMPLES"
+ }, 
+ {
   "path": "/packages/misc/samples/network_samples", 
   "ver": "v0.3.0", 
   "name": "NETWORK_SAMPLES"
