@@ -30,11 +30,6 @@
   "name": "ONENET"
  }, 
  {
-  "path": "/packages/security/mbedtls", 
-  "ver": "v2.7.10", 
-  "name": "MBEDTLS"
- }, 
- {
   "path": "/packages/multimedia/STemWin", 
   "ver": "latest", 
   "name": "STEMWIN"

@@ -145,7 +145,6 @@
 
 #define SAL_USING_LWIP
 #define SAL_USING_AT
-#define SAL_USING_TLS
 #define SAL_USING_POSIX
 
 /* Network interface device */
@@ -181,7 +180,7 @@
 #define RT_LWIP_PBUF_NUM 16
 #define RT_LWIP_RAW_PCB_NUM 4
 #define RT_LWIP_UDP_PCB_NUM 4
-#define RT_LWIP_TCP_PCB_NUM 4
+#define RT_LWIP_TCP_PCB_NUM 8
 #define RT_LWIP_TCP_SEG_NUM 40
 #define RT_LWIP_TCP_SND_BUF 8196
 #define RT_LWIP_TCP_WND 8196
@@ -271,16 +270,6 @@
 
 /* security packages */
 
-#define PKG_USING_MBEDTLS
-
-/* Select Root Certificate */
-
-#define MBEDTLS_AES_ROM_TABLES
-#define MBEDTLS_ECP_WINDOW_SIZE 2
-#define MBEDTLS_SSL_MAX_CONTENT_LEN 3584
-#define MBEDTLS_MPI_MAX_SIZE 1024
-#define MBEDTLS_CTR_DRBG_KEYSIZE 32
-#define PKG_USING_MBEDTLS_V2710
 
 /* language packages */
 
