@@ -1,10 +1,5 @@
 [
  {
-  "path": "/packages/iot/pahomqtt", 
-  "ver": "v1.1.0", 
-  "name": "PAHOMQTT"
- }, 
- {
   "path": "/packages/iot/webclient", 
   "ver": "v2.1.2", 
   "name": "WEBCLIENT"
@@ -23,11 +18,6 @@
   "path": "/packages/iot/at_device", 
   "ver": "v2.0.2", 
   "name": "AT_DEVICE"
- }, 
- {
-  "path": "/packages/iot/iot_cloud/onenet", 
-  "ver": "latest", 
-  "name": "ONENET"
  }, 
  {
   "path": "/packages/multimedia/STemWin", 
