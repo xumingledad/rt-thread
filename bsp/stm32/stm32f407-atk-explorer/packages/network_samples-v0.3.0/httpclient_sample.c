@@ -16,6 +16,7 @@
 #include <netdb.h>
 #include <cJSON.h>
 #include <finsh.h>
+#include <dfs_posix.h>
 
 #define GET_HEADER_BUFSZ        1024        //头部大小
 #define GET_RESP_BUFSZ          1024*2        //响应缓冲区大小
@@ -24,11 +25,11 @@
 #define AREA_ID                 "101021300" //上海浦东地区 ID
 
 /* 天气数据解析 */
-void weather_data_parse(rt_uint8_t *data)
+void weather_data_parse(char *data)
 {
     cJSON *root = RT_NULL, *object = RT_NULL, *item = RT_NULL;
 
-    root = cJSON_Parse((const char *)data);
+    root = cJSON_Parse((char *)data);
     if (!root)
     {
         rt_kprintf("No memory for cJSON root!\n");
@@ -59,6 +60,7 @@ void weather_data_parse(rt_uint8_t *data)
 
     if (root != RT_NULL)
         cJSON_Delete(root);
+		unlink("/sdcard/weather.txt");
 }
 //void weather(int argc, char **argv)
 //{
@@ -146,19 +148,20 @@ void weather_data_parse(rt_uint8_t *data)
 //}
 void weather(void)
 {
-int ret =0;int i =0;
-	unsigned char * buffer =RT_NULL;
-	buffer =rt_malloc(GET_RESP_BUFSZ);
-	if (buffer == RT_NULL)
+int ret =0;int fd, size;
+	//unsigned char * buffer =RT_NULL;
+	//buffer =rt_malloc(GET_RESP_BUFSZ);
+	
+	char buffer[200];
+	fd = open("/sdcard/weather.txt", O_CREAT);
+	//ret =webclient_get_file("http://weather.com.cn/data/sk/101021300.html","/sdcard/weather.txt");  
+    if (fd >= 0)
     {
-        rt_kprintf("No memory for weather_url!\n");
-        return;
+        size = read(fd, buffer, sizeof(buffer));
+        //close(fd);
+			  rt_kprintf("Read from file test.txt : %s \n", buffer);
+			  weather_data_parse(buffer );
     }
-		ret =webclient_get_file("http://weather.com.cn/data/sk/101021300.html","sdcard");
-		if (ret>0)
-		{ weather_data_parse(buffer);
-		}
- if (buffer != RT_NULL)
-       rt_free(buffer);
+		
 }
 MSH_CMD_EXPORT(weather, Get weather by webclient);

@@ -356,6 +356,10 @@ menu "On-chip Peripheral Drivers"
 endmenu
 
 menu "Board extended module Drivers"
+config BSP_USING_INFO
+        bool "Enable INFO"
+        select RT_USING_INFO
+        default y
 
 endmenu
 

@@ -75,8 +75,10 @@ static int rt_hw_sram_init(void)
     }
     else
     {
-        LOG_D("sram init success, mapped at 0x%X, size is %d bytes, data width is %d", SRAM_BANK_ADDR, SRAM_SIZE, SRAM_DATA_WIDTH);
-#ifdef RT_USING_MEMHEAP_AS_HEAP
+			#ifdef RT_USING_INFO
+       			LOG_D("sram init success, mapped at 0x%X, size is %d bytes, data width is %d", SRAM_BANK_ADDR, SRAM_SIZE, SRAM_DATA_WIDTH);
+#endif
+			#ifdef RT_USING_MEMHEAP_AS_HEAP
         /* If RT_USING_MEMHEAP_AS_HEAP is enabled, SRAM is initialized to the heap */
         rt_memheap_init(&system_heap, "sram", (void *)SRAM_BANK_ADDR, SRAM_SIZE);
 #endif

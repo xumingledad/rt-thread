@@ -17,7 +17,6 @@ CRC_HandleTypeDef   CrcHandle;
 	GUI_SetBkColor(GUI_BLACK); 
 	GUI_SetFont(&GUI_Font24_ASCII); 
 	GUI_Clear();
-  rt_kprintf("%s\n", ctime(&now));
 	while(1)
 	{
 		now = time(RT_NULL);
