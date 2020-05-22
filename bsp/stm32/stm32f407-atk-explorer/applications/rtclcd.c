@@ -36,4 +36,4 @@ static int lcd_RTC(void)
         rt_thread_startup(tid);
     return RT_EOK;
 }
-INIT_APP_EXPORT(lcd_RTC);
+//INIT_APP_EXPORT(lcd_RTC);

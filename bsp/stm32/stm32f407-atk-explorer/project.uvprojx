@@ -487,6 +487,16 @@
               <FileType>1</FileType>
               <FilePath>applications\text_usbh.c</FilePath>
             </File>
+            <File>
+              <FileName>urlcode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>applications\urlcode.c</FilePath>
+            </File>
+            <File>
+              <FileName>weather1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>applications\weather1.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -677,11 +687,6 @@
               <FileType>1</FileType>
               <FilePath>packages\network_samples-v0.3.0\tcpserver_sample.c</FilePath>
             </File>
-            <File>
-              <FileName>httpclient_sample.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\network_samples-v0.3.0\httpclient_sample.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -726,6 +731,16 @@
               <FileName>webclient_file.c</FileName>
               <FileType>1</FileType>
               <FilePath>packages\webclient-v2.1.2\src\webclient_file.c</FilePath>
+            </File>
+            <File>
+              <FileName>webclient_get_sample.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\webclient-v2.1.2\samples\webclient_get_sample.c</FilePath>
+            </File>
+            <File>
+              <FileName>webclient_post_sample.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\webclient-v2.1.2\samples\webclient_post_sample.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -872,7 +887,7 @@
                   <MiscControls> --c99</MiscControls>
                   <Define> </Define>
                   <Undefine> </Undefine>
-                  <IncludePath></IncludePath>
+                  <IncludePath> </IncludePath>
                 </VariousControls>
               </Cads>
               <Aads>
