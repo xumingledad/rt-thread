@@ -7,7 +7,7 @@
 
 static void test_thread(void *param)
 {
-CRC_HandleTypeDef   CrcHandle;
+    CRC_HandleTypeDef   CrcHandle;
 	CrcHandle.Instance = CRC; 
 	HAL_CRC_Init(&CrcHandle);
 	GUI_Init();    
@@ -36,4 +36,4 @@ static int lcd_RTC(void)
         rt_thread_startup(tid);
     return RT_EOK;
 }
-//INIT_APP_EXPORT(lcd_RTC);
+INIT_APP_EXPORT(lcd_RTC);

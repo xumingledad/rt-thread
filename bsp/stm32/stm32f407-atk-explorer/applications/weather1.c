@@ -31,6 +31,7 @@
            item =	cJSON_GetObjectItem(weatheritem, "tem_night");  rt_kprintf("\n最低温度:%s ",item->valuestring);
            item =	cJSON_GetObjectItem(weatheritem, "win");        rt_kprintf("\n风向    :%s ",item->valuestring);
            item =	cJSON_GetObjectItem(weatheritem, "win_speed");  rt_kprintf("\n风力    :%s ",item->valuestring);
+		       item =	cJSON_GetObjectItem(weatheritem, "wea");        rt_kprintf("\n天气    :%s ",item->valuestring);
            rt_kprintf("\n");
    }   
         rt_kprintf("\n");
@@ -51,6 +52,7 @@ void weather_parse(char *data)//解析的是实时天气
     }
 		rt_kprintf("\n\t今日实时天气");
 		item =	cJSON_GetObjectItem(root, "city");       rt_kprintf("\n所在城市:%s ",item->valuestring);
+		item =	cJSON_GetObjectItem(root, "wea");        rt_kprintf("\n天气    :%s ",item->valuestring);
     item =	cJSON_GetObjectItem(root, "tem");        rt_kprintf("\n实时温度:%s ",item->valuestring);		
     item =	cJSON_GetObjectItem(root, "tem_day");    rt_kprintf("\n最高温度:%s ",item->valuestring);
     item =	cJSON_GetObjectItem(root, "tem_night");  rt_kprintf("\n最低温度:%s ",item->valuestring);
