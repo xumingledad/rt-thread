@@ -405,6 +405,7 @@ int dfs_elm_open(struct dfs_fd *file)
         /* Creates a new file. The function fails if the file is already existing. */
         if (file->flags & O_EXCL)
             mode |= FA_CREATE_NEW;
+				
 
         /* allocate a fd */
         fd = (FIL *)rt_malloc(sizeof(FIL));

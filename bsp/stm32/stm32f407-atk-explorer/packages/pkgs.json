@@ -25,9 +25,9 @@
   "name": "STEMWIN"
  }, 
  {
-  "path": "/packages/peripherals/button", 
-  "ver": "v1.0.1", 
-  "name": "BUTTON"
+  "path": "/packages/peripherals/sensors/ds18b20", 
+  "ver": "latest", 
+  "name": "DS18B20"
  }, 
  {
   "path": "/packages/misc/samples/filesystem_samples", 

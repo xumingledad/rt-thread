@@ -19,13 +19,14 @@
 
 #include <rtthread.h>
 #include <dfs_posix.h> /* 当需要使用文件操作时，需要包含这个头文件 */
+#include "ff.h"
 
 static void mkdir_sample(void)
 {
     int ret;
 
     /* 创建目录*/
-    ret = mkdir("/udisk/fuck", 0x777);
+    ret = f_mkdir("/sdcard/fuck");
     if (ret < 0)
     {
         /* 创建目录失败*/

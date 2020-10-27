@@ -14,7 +14,6 @@
 #include <time.h>
 #include <string.h>
 #include <rtthread.h>
-
 #ifdef RT_USING_RTC
 
 /* Using NTP auto sync RTC time */
@@ -60,7 +59,22 @@ rt_err_t set_date(rt_uint32_t year, rt_uint32_t month, rt_uint32_t day)
     rt_exit_critical();
 
     /* update date. */
-    tm_new.tm_year = year - 1900;
+	if (year > 2099 || year < 2000)
+        {
+					 rt_kprintf("year is out of range %d\n",year);
+            return -RT_ERROR;
+        }
+        if (month == 0 || month > 12)
+        {
+            rt_kprintf("month is out of range [1-12]\n");
+            return -RT_ERROR;
+        }
+        if (day == 0 || day > 31)
+        {
+            rt_kprintf("day is out of range [1-31]\n");
+            return -RT_ERROR ;
+        }
+    tm_new.tm_year = year - 1900;			 
     tm_new.tm_mon  = month - 1; /* tm_mon: 0~11 */
     tm_new.tm_mday = day;
 

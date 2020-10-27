@@ -620,11 +620,11 @@ RTM_EXPORT(rmdir);
  *
  * @return the DIR pointer of directory, NULL on open directory failed.
  */
-DIR *opendir(const char *name)
+DIRE *opendir(const char *name)
 {
     struct dfs_fd *d;
     int fd, result;
-    DIR *t;
+    DIRE *t;
 
     t = NULL;
 
@@ -642,7 +642,7 @@ DIR *opendir(const char *name)
     if (result >= 0)
     {
         /* open successfully */
-        t = (DIR *) rt_malloc(sizeof(DIR));
+        t = (DIRE *) rt_malloc(sizeof(DIRE));
         if (t == NULL)
         {
             dfs_file_close(d);
@@ -650,7 +650,7 @@ DIR *opendir(const char *name)
         }
         else
         {
-            memset(t, 0, sizeof(DIR));
+            memset(t, 0, sizeof(DIRE));
 
             t->fd = fd;
         }
@@ -677,7 +677,7 @@ RTM_EXPORT(opendir);
  *
  * @return the next directory entry, NULL on the end of directory or failed.
  */
-struct dirent *readdir(DIR *d)
+struct dirent *readdir(DIRE *d)
 {
     int result;
     struct dfs_fd *fd;
@@ -728,7 +728,7 @@ RTM_EXPORT(readdir);
  *
  * @return the current location in directory stream.
  */
-long telldir(DIR *d)
+long telldir(DIRE *d)
 {
     struct dfs_fd *fd;
     long result;
@@ -755,7 +755,7 @@ RTM_EXPORT(telldir);
  * @param d the directory stream.
  * @param offset the offset in directory stream.
  */
-void seekdir(DIR *d, off_t offset)
+void seekdir(DIRE *d, off_t offset)
 {
     struct dfs_fd *fd;
 
@@ -780,7 +780,7 @@ RTM_EXPORT(seekdir);
  *
  * @param d the directory stream.
  */
-void rewinddir(DIR *d)
+void rewinddir(DIRE *d)
 {
     struct dfs_fd *fd;
 
@@ -807,7 +807,7 @@ RTM_EXPORT(rewinddir);
  *
  * @return 0 on successful, -1 on failed.
  */
-int closedir(DIR *d)
+int closedir(DIRE *d)
 {
     int result;
     struct dfs_fd *fd;
@@ -849,7 +849,7 @@ RTM_EXPORT(closedir);
 int chdir(const char *path)
 {
     char *fullpath;
-    DIR *d;
+    DIRE *d;
 
     if (path == NULL)
     {

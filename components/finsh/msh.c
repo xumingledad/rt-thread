@@ -444,7 +444,7 @@ static int str_common(const char *str1, const char *str2)
 #ifdef RT_USING_DFS
 void msh_auto_complete_path(char *path)
 {
-    DIR *dir = RT_NULL;
+    DIRE *dir = RT_NULL;
     struct dirent *dirent = RT_NULL;
     char *full_path, *ptr, *index;
 

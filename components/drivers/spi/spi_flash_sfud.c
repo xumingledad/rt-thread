@@ -130,7 +130,6 @@ static rt_size_t rt_sfud_write(rt_device_t dev, rt_off_t pos, const void* buffer
         return size;
     }
 }
-
 /**
  * SPI write data then read data
  */

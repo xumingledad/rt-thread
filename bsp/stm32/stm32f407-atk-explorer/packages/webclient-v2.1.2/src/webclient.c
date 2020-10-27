@@ -285,7 +285,7 @@ static int webclient_resolve_address(struct webclient_session *session, struct a
         int ret;
 
         rt_memset(&hint, 0, sizeof(hint));
-        ret = getaddrinfo(session->host, port_str, &hint, res);
+        ret =getaddrinfo(session->host, port_str, &hint, res);
         if (ret != 0)
         {
             LOG_E("getaddrinfo err: %d '%s'.", ret, session->host);

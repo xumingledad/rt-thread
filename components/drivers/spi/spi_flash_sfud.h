@@ -52,5 +52,5 @@ sfud_flash_t rt_sfud_flash_find(const char *spi_dev_name);
  * @return sfud flash device if success, otherwise return RT_NULL
  */
 sfud_flash_t rt_sfud_flash_find_by_dev_name(const char *flash_dev_name);
-
+static rt_size_t rt_sfud_write(rt_device_t dev, rt_off_t pos, const void* buffer, rt_size_t size);
 #endif /* _SPI_FLASH_SFUD_H_ */

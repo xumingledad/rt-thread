@@ -27,16 +27,16 @@ typedef struct
     char buf[512];
     int num;
     int cur;
-} DIR;
+} DIRE;
 
 /* directory api*/
 int mkdir(const char *path, mode_t mode);
-DIR *opendir(const char *name);
-struct dirent *readdir(DIR *d);
-long telldir(DIR *d);
-void seekdir(DIR *d, off_t offset);
-void rewinddir(DIR *d);
-int closedir(DIR *d);
+DIRE *opendir(const char *name);
+struct dirent *readdir(DIRE *d);
+long telldir(DIRE *d);
+void seekdir(DIRE *d, off_t offset);
+void rewinddir(DIRE *d);
+int closedir(DIRE *d);
 
 /* file api*/
 int open(const char *file, int flags, ...);

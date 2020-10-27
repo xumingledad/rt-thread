@@ -24,6 +24,10 @@ if GetDepend(['BSP_USING_SRAM']):
 if GetDepend(['BSP_USING_LCDST']):
     src += Glob('ports/drv_lcd.c')
 
+if GetDepend(['BSP_USING_LCDTOUCH']):
+    src += Glob('ports/xpt2046.c')
+
+
 
 path =  [cwd]
 path += [cwd + '/CubeMX_Config/Inc']
