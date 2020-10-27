@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # RT-Thread #
 
 [中文页](README_zh.md) |
@@ -149,3 +150,7 @@ RT-Thread is very grateful for the support from all community developers, and if
 # Contribution
 
 If you are interested in RT-Thread and want to join in the development of RT-Thread and become a code contributor,please refer to the [Code Contribution Guide](https://github.com/RT-Thread/rtthread-manual-doc/blob/master/documentation/contribution_guide/contribution_guide.md).
+=======
+# f407
+rtthreadf407
+>>>>>>> newbench
