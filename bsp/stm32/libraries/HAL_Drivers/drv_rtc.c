@@ -6,13 +6,19 @@
  * Change Logs:
  * Date         Author        Notes
  * 2018-12-04   balanceTWK    first version
- * 2020-10-14     Dozingfiretruck   Porting for stm32wbxx
  */
 
 #include "board.h"
 
 #ifdef BSP_USING_ONCHIP_RTC
 
+
+#ifndef HAL_RTCEx_BKUPRead
+#define HAL_RTCEx_BKUPRead(x1, x2) (~BKUP_REG_DATA)
+#endif
+#ifndef HAL_RTCEx_BKUPWrite
+#define HAL_RTCEx_BKUPWrite(x1, x2, x3)
+#endif
 #ifndef RTC_BKP_DR1
 #define RTC_BKP_DR1 RT_NULL
 #endif
@@ -27,21 +33,11 @@ static struct rt_device rtc;
 
 static RTC_HandleTypeDef RTC_Handler;
 
-RT_WEAK uint32_t HAL_RTCEx_BKUPRead(RTC_HandleTypeDef *hrtc, uint32_t BackupRegister)
-{
-    return (~BKUP_REG_DATA);
-}
-
-RT_WEAK void HAL_RTCEx_BKUPWrite(RTC_HandleTypeDef *hrtc, uint32_t BackupRegister, uint32_t Data)
-{
-    return;
-}
-
 static time_t get_rtc_timestamp(void)
 {
     RTC_TimeTypeDef RTC_TimeStruct = {0};
     RTC_DateTypeDef RTC_DateStruct = {0};
-    struct tm tm_new = {0};
+    struct tm tm_new;
 
     HAL_RTC_GetTime(&RTC_Handler, &RTC_TimeStruct, RTC_FORMAT_BIN);
     HAL_RTC_GetDate(&RTC_Handler, &RTC_DateStruct, RTC_FORMAT_BIN);
@@ -88,37 +84,21 @@ static rt_err_t set_rtc_time_stamp(time_t time_stamp)
 
     LOG_D("set rtc time.");
     HAL_RTCEx_BKUPWrite(&RTC_Handler, RTC_BKP_DR1, BKUP_REG_DATA);
-
-#ifdef SOC_SERIES_STM32F1
-    /* F1 series does't save year/month/date datas. so keep those datas to bkp reg */
-    HAL_RTCEx_BKUPWrite(&RTC_Handler, RTC_BKP_DR2, RTC_DateStruct.Year);
-    HAL_RTCEx_BKUPWrite(&RTC_Handler, RTC_BKP_DR3, RTC_DateStruct.Month);
-    HAL_RTCEx_BKUPWrite(&RTC_Handler, RTC_BKP_DR4, RTC_DateStruct.Date);
-    HAL_RTCEx_BKUPWrite(&RTC_Handler, RTC_BKP_DR5, RTC_DateStruct.WeekDay);
-#endif
-
     return RT_EOK;
 }
 
 static void rt_rtc_init(void)
 {
-#if !defined(SOC_SERIES_STM32H7) && !defined(SOC_SERIES_STM32WB)
+#ifndef SOC_SERIES_STM32H7
     __HAL_RCC_PWR_CLK_ENABLE();
 #endif
 
     RCC_OscInitTypeDef RCC_OscInitStruct = {0};
 #ifdef BSP_RTC_USING_LSI
-#ifdef SOC_SERIES_STM32WB
-RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSI1;
-    RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
-    RCC_OscInitStruct.LSEState = RCC_LSE_OFF;
-    RCC_OscInitStruct.LSIState = RCC_LSI_ON;
-#else
     RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSI;
     RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
     RCC_OscInitStruct.LSEState = RCC_LSE_OFF;
     RCC_OscInitStruct.LSIState = RCC_LSI_ON;
-#endif
 #else
     RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSE;
     RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
@@ -127,36 +107,6 @@ RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSI1;
 #endif
     HAL_RCC_OscConfig(&RCC_OscInitStruct);
 }
-
-#ifdef SOC_SERIES_STM32F1
-/* update RTC_BKP_DRx*/
-static void rt_rtc_f1_bkp_update(void)
-{
-    RTC_DateTypeDef RTC_DateStruct = {0};
-
-    HAL_PWR_EnableBkUpAccess();
-    __HAL_RCC_BKP_CLK_ENABLE();
-
-    RTC_DateStruct.Year    = HAL_RTCEx_BKUPRead(&RTC_Handler, RTC_BKP_DR2);
-    RTC_DateStruct.Month   = HAL_RTCEx_BKUPRead(&RTC_Handler, RTC_BKP_DR3);
-    RTC_DateStruct.Date    = HAL_RTCEx_BKUPRead(&RTC_Handler, RTC_BKP_DR4);
-    RTC_DateStruct.WeekDay = HAL_RTCEx_BKUPRead(&RTC_Handler, RTC_BKP_DR5);
-    if (HAL_RTC_SetDate(&RTC_Handler, &RTC_DateStruct, RTC_FORMAT_BIN) != HAL_OK)
-    {
-        Error_Handler();
-    }
-
-    HAL_RTC_GetDate(&RTC_Handler, &RTC_DateStruct, RTC_FORMAT_BIN);
-    if (HAL_RTCEx_BKUPRead(&RTC_Handler, RTC_BKP_DR4) != RTC_DateStruct.Date)
-    {
-        HAL_RTCEx_BKUPWrite(&RTC_Handler, RTC_BKP_DR1, BKUP_REG_DATA);
-        HAL_RTCEx_BKUPWrite(&RTC_Handler, RTC_BKP_DR2, RTC_DateStruct.Year);
-        HAL_RTCEx_BKUPWrite(&RTC_Handler, RTC_BKP_DR3, RTC_DateStruct.Month);
-        HAL_RTCEx_BKUPWrite(&RTC_Handler, RTC_BKP_DR4, RTC_DateStruct.Date);
-        HAL_RTCEx_BKUPWrite(&RTC_Handler, RTC_BKP_DR5, RTC_DateStruct.WeekDay);
-    }
-}
-#endif
 
 static rt_err_t rt_rtc_config(struct rt_device *dev)
 {
@@ -197,7 +147,7 @@ static rt_err_t rt_rtc_config(struct rt_device *dev)
         RTC_Handler.Init.OutPut = RTC_OUTPUT_DISABLE;
         RTC_Handler.Init.OutPutPolarity = RTC_OUTPUT_POLARITY_HIGH;
         RTC_Handler.Init.OutPutType = RTC_OUTPUT_TYPE_OPENDRAIN;
-#elif defined(SOC_SERIES_STM32F2) || defined(SOC_SERIES_STM32F4) || defined(SOC_SERIES_STM32F7) || defined(SOC_SERIES_STM32L4) || defined(SOC_SERIES_STM32H7) || defined (SOC_SERIES_STM32WB)
+#elif defined(SOC_SERIES_STM32F2) || defined(SOC_SERIES_STM32F4) || defined(SOC_SERIES_STM32F7) || defined(SOC_SERIES_STM32L4) || defined(SOC_SERIES_STM32H7)
 
         /* set the frequency division */
 #ifdef BSP_RTC_USING_LSI
@@ -217,14 +167,6 @@ static rt_err_t rt_rtc_config(struct rt_device *dev)
             return -RT_ERROR;
         }
     }
-#ifdef SOC_SERIES_STM32F1
-    else
-    {
-        /* F1 series need update by bkp reg datas */
-        rt_rtc_f1_bkp_update();
-    }
-#endif
-
     return RT_EOK;
 }
 

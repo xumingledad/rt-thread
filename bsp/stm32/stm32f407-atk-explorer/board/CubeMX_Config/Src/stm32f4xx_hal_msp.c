@@ -161,6 +161,50 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* hadc)
 }
 
 /**
+* @brief CRC MSP Initialization
+* This function configures the hardware resources used in this example
+* @param hcrc: CRC handle pointer
+* @retval None
+*/
+void HAL_CRC_MspInit(CRC_HandleTypeDef* hcrc)
+{
+  if(hcrc->Instance==CRC)
+  {
+  /* USER CODE BEGIN CRC_MspInit 0 */
+
+  /* USER CODE END CRC_MspInit 0 */
+    /* Peripheral clock enable */
+    __HAL_RCC_CRC_CLK_ENABLE();
+  /* USER CODE BEGIN CRC_MspInit 1 */
+
+  /* USER CODE END CRC_MspInit 1 */
+  }
+
+}
+
+/**
+* @brief CRC MSP De-Initialization
+* This function freeze the hardware resources used in this example
+* @param hcrc: CRC handle pointer
+* @retval None
+*/
+void HAL_CRC_MspDeInit(CRC_HandleTypeDef* hcrc)
+{
+  if(hcrc->Instance==CRC)
+  {
+  /* USER CODE BEGIN CRC_MspDeInit 0 */
+
+  /* USER CODE END CRC_MspDeInit 0 */
+    /* Peripheral clock disable */
+    __HAL_RCC_CRC_CLK_DISABLE();
+  /* USER CODE BEGIN CRC_MspDeInit 1 */
+
+  /* USER CODE END CRC_MspDeInit 1 */
+  }
+
+}
+
+/**
 * @brief ETH MSP Initialization
 * This function configures the hardware resources used in this example
 * @param heth: ETH handle pointer
@@ -739,7 +783,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
     */
     GPIO_InitStruct.Pin = GPIO_PIN_9|GPIO_PIN_10;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_PULLUP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF7_USART1;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
@@ -766,7 +810,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
     */
     GPIO_InitStruct.Pin = GPIO_PIN_10|GPIO_PIN_11;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_PULLUP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF7_USART3;
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
@@ -774,6 +818,30 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
   /* USER CODE BEGIN USART3_MspInit 1 */
 
   /* USER CODE END USART3_MspInit 1 */
+  }
+  else if(huart->Instance==USART6)
+  {
+  /* USER CODE BEGIN USART6_MspInit 0 */
+
+  /* USER CODE END USART6_MspInit 0 */
+    /* Peripheral clock enable */
+    __HAL_RCC_USART6_CLK_ENABLE();
+  
+    __HAL_RCC_GPIOC_CLK_ENABLE();
+    /**USART6 GPIO Configuration    
+    PC6     ------> USART6_TX
+    PC7     ------> USART6_RX 
+    */
+    GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_7;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+    GPIO_InitStruct.Alternate = GPIO_AF8_USART6;
+    HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+  /* USER CODE BEGIN USART6_MspInit 1 */
+
+  /* USER CODE END USART6_MspInit 1 */
   }
 
 }
@@ -824,19 +892,37 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* huart)
 
   /* USER CODE END USART3_MspDeInit 1 */
   }
+  else if(huart->Instance==USART6)
+  {
+  /* USER CODE BEGIN USART6_MspDeInit 0 */
+
+  /* USER CODE END USART6_MspDeInit 0 */
+    /* Peripheral clock disable */
+    __HAL_RCC_USART6_CLK_DISABLE();
+  
+    /**USART6 GPIO Configuration    
+    PC6     ------> USART6_TX
+    PC7     ------> USART6_RX 
+    */
+    HAL_GPIO_DeInit(GPIOC, GPIO_PIN_6|GPIO_PIN_7);
+
+  /* USER CODE BEGIN USART6_MspDeInit 1 */
+
+  /* USER CODE END USART6_MspDeInit 1 */
+  }
 
 }
 
 /**
-* @brief PCD MSP Initialization
+* @brief HCD MSP Initialization
 * This function configures the hardware resources used in this example
-* @param hpcd: PCD handle pointer
+* @param hhcd: HCD handle pointer
 * @retval None
 */
-void HAL_PCD_MspInit(PCD_HandleTypeDef* hpcd)
+void HAL_HCD_MspInit(HCD_HandleTypeDef* hhcd)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
-  if(hpcd->Instance==USB_OTG_FS)
+  if(hhcd->Instance==USB_OTG_FS)
   {
   /* USER CODE BEGIN USB_OTG_FS_MspInit 0 */
 
@@ -867,14 +953,14 @@ void HAL_PCD_MspInit(PCD_HandleTypeDef* hpcd)
 }
 
 /**
-* @brief PCD MSP De-Initialization
+* @brief HCD MSP De-Initialization
 * This function freeze the hardware resources used in this example
-* @param hpcd: PCD handle pointer
+* @param hhcd: HCD handle pointer
 * @retval None
 */
-void HAL_PCD_MspDeInit(PCD_HandleTypeDef* hpcd)
+void HAL_HCD_MspDeInit(HCD_HandleTypeDef* hhcd)
 {
-  if(hpcd->Instance==USB_OTG_FS)
+  if(hhcd->Instance==USB_OTG_FS)
   {
   /* USER CODE BEGIN USB_OTG_FS_MspDeInit 0 */
 
@@ -951,6 +1037,7 @@ static void HAL_FSMC_MspInit(void){
   PD4   ------> FSMC_NOE
   PD5   ------> FSMC_NWE
   PG10   ------> FSMC_NE3
+  PG12   ------> FSMC_NE4
   PE0   ------> FSMC_NBL0
   PE1   ------> FSMC_NBL1
   */
@@ -964,7 +1051,7 @@ static void HAL_FSMC_MspInit(void){
   HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
   GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3 
-                          |GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_10;
+                          |GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_10|GPIO_PIN_12;
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
@@ -1056,6 +1143,7 @@ static void HAL_FSMC_MspDeInit(void){
   PD4   ------> FSMC_NOE
   PD5   ------> FSMC_NWE
   PG10   ------> FSMC_NE3
+  PG12   ------> FSMC_NE4
   PE0   ------> FSMC_NBL0
   PE1   ------> FSMC_NBL1
   */
@@ -1064,7 +1152,7 @@ static void HAL_FSMC_MspDeInit(void){
                           |GPIO_PIN_14|GPIO_PIN_15);
 
   HAL_GPIO_DeInit(GPIOG, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3 
-                          |GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_10);
+                          |GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_10|GPIO_PIN_12);
 
   HAL_GPIO_DeInit(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10 
                           |GPIO_PIN_11|GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14 
