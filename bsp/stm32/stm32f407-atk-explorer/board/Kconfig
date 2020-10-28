@@ -26,7 +26,13 @@ menu "Onboard Peripheral Drivers"
         select BSP_USING_UART
         select BSP_USING_UART3
         default n
-    
+
+     config BSP_USING_COM6
+                bool "Enable COM6 (uart6)"
+                select BSP_USING_UART
+                select BSP_USING_UART6
+                default n
+
     config BSP_USING_SRAM
         bool "Enable SRAM"
         select BSP_USING_EXT_FMC_IO
@@ -345,6 +351,20 @@ menu "On-chip Peripheral Drivers"
 endmenu
 
 menu "Board extended module Drivers"
+config BSP_USING_INFO
+        bool "Enable INFO"
+        select RT_USING_INFO
+        default y
+		
+config BSP_USING_LCDST
+        bool "Enable 2.8 Inch LCD"
+        select RT_USING_LCDST
+        default n
+
+config BSP_USING_LCDTOUCH
+        bool "Enable 2.8 Inch LCD_TOUCH"
+        select RT_USING_LCDTOUCH
+        default n
 
 endmenu
 
