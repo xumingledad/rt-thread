@@ -128,6 +128,17 @@
 
 /* Using USB */
 
+#define RT_USING_USB_DEVICE
+#define RT_USBD_THREAD_STACK_SZ 4096
+#define USB_VENDOR_ID 0x0FFE
+#define USB_PRODUCT_ID 0x0001
+#define _RT_USB_DEVICE_CDC
+#define RT_USB_DEVICE_CDC
+#define RT_VCOM_TASK_STK_SIZE 512
+#define RT_CDC_RX_BUFSIZE 128
+#define RT_VCOM_SERNO "32021919830108"
+#define RT_VCOM_SER_LEN 14
+#define RT_VCOM_TX_TIMEOUT 1000
 
 /* POSIX layer and C standard library */
 
@@ -323,6 +334,7 @@
 #define BSP_USING_ONCHIP_RTC
 #define BSP_RTC_USING_LSE
 #define BSP_USING_SDIO
+#define BSP_USING_USBD
 #define BSP_USING_EXT_FMC_IO
 #define BSP_USING_FMC
 

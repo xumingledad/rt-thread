@@ -11,35 +11,25 @@
 #include <rtthread.h>
 #include <rtdevice.h>
 #include <board.h>
-#include "GUI.h"
-#include "maintask.h"
-#include <GUI_shot.h>
-#include <dfs_posix.h>
-#include "spi_flash_sfud.h"
-#include "DIALOG.h"
-//void key_task(void*parameter)
-//{
-//    rt_uint8_t key;
-//	
-//    while(1)
-//    {
-//        key = Key_Scan(0);
-//        switch(key)
-//        {
-//        case KEY_ON:
-//            LEDOn (2);
-//            create_bmppicture("/sdcard/shot.bmp",0,0,320,240);
-//            LEDOff(2);
-//            break;
-//        }
-//        rt_thread_mdelay(100);
-//    }
-//}
-int main(void)//ึ๗าช
+
+int main(void)
 {
-	 GuiMainTask();
-    while(1)
+	
+    rt_device_t dev = RT_NULL;
+    char buf[] = "hello rt-thread!\r\n";
+
+    dev = rt_device_find("vcom");
+    
+    if (dev)
+        rt_device_open(dev, RT_DEVICE_FLAG_RDWR);
+    else
+        return -RT_ERROR;
+    
+    while (1)
     {
-			rt_thread_mdelay(100);
+        rt_device_write(dev, 0, buf, rt_strlen(buf));
+        rt_thread_mdelay(500);
     }
+
+    return RT_EOK;
 }
